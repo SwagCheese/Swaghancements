@@ -24,7 +24,6 @@ import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.List;

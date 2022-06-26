@@ -30,12 +30,13 @@ public enum Category {
     MODS("gui.category.mods"),
     HYPIXEL("gui.category.hypixel"),
     ADDONS("gui.category.addons"),
+    HACKS("gui.category.hacks"),
 
     // Mods
     ANIMATIONS("gui.subcategory.animations"),
     AUTOTIP("gui.subcategory.autotip"),
     AUTO_GG("gui.subcategory.autogg"),
-    REACH("gui.subcategory.reachdisplay"),
+    REACH_DISPLAY("gui.subcategory.reachdisplay"),
     VANILLA_ENHANCEMENTS("gui.subcategory.vanillaenhancements"),
     KEYSTROKES("gui.subcategory.keystrokes"),
     MOTION_BLUR("gui.subcategory.motionblur"),
@@ -49,7 +50,7 @@ public enum Category {
     FOV_MODIFIER("gui.subcategory.fovmodifier"),
     OTHER("gui.subcategory.other");
 
-    private String display;
+    private final String display;
 
     Category(String display) {
         this.display = I18n.format(display);

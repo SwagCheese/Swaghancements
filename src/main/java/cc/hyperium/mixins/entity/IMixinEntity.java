@@ -21,10 +21,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.event.HoverEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Entity.class)
 public interface IMixinEntity {
 
     @Invoker HoverEvent callGetHoverEvent();
-
+    @Accessor() int getFire();
+    @Accessor() int getNextStepDistance();
+    @Accessor() void setNextStepDistance(int nextStepDistance);
 }

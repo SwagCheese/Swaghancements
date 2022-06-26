@@ -23,7 +23,6 @@ import cc.hyperium.utils.JsonHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import cc.hyperium.config.Settings;
 
 /**
  * @author Sk1er

@@ -30,15 +30,26 @@ import java.util.UUID;
 @Mixin(Entity.class)
 public abstract class MixinEntity {
 
-    @Shadow public double posX;
-    @Shadow public double posY;
-    @Shadow public double posZ;
-    @Shadow public abstract String getName();
-    @Shadow public abstract UUID getUniqueID();
-    @Shadow public Vec3 getLook(float partialTicks) {
+    @Shadow
+    public double posX;
+    @Shadow
+    public double posY;
+    @Shadow
+    public double posZ;
+
+    @Shadow
+    public abstract String getName();
+
+    @Shadow
+    public abstract UUID getUniqueID();
+
+    @Shadow
+    public Vec3 getLook(float partialTicks) {
         return null;
     }
-    @Shadow public abstract boolean isSneaking();
+
+    @Shadow
+    public abstract boolean isSneaking();
 
     private HyperiumEntity hyperiumEntity = new HyperiumEntity((Entity) (Object) this);
 
@@ -50,4 +61,6 @@ public abstract class MixinEntity {
     public IChatComponent getDisplayName() {
         return hyperiumEntity.getDisplayName();
     }
+
+
 }

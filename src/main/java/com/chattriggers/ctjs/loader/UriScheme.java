@@ -4,6 +4,7 @@ import cc.hyperium.Hyperium;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -37,10 +38,10 @@ public class UriScheme {
         }
     }
 
-    private static void connectWithSockets(String module) throws Exception {
-        Socket socket = new Socket(InetAddress.getLocalHost(), PORT);
-        socket.getOutputStream().write(module.getBytes());
-        socket.close();
+    private static void connectWithSockets(String module) throws IOException {
+        try (Socket socket = new Socket(InetAddress.getLocalHost(), PORT)){
+            socket.getOutputStream().write(module.getBytes());
+        }
     }
 
     private static void copyModuleIn(String module) {
@@ -49,10 +50,8 @@ public class UriScheme {
 
         File toDownload = new File(modulesDir, ".to_download.txt");
 
-        try {
-            PrintWriter pw = new PrintWriter(new FileWriter(toDownload, true));
+        try (PrintWriter pw = new PrintWriter(new FileWriter(toDownload, true))) {
             pw.append(module).append(",");
-            pw.close();
         } catch (Exception e) {
             Hyperium.LOGGER.error("Error writing to to_download file.");
         }

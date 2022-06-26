@@ -19,7 +19,6 @@ package cc.hyperium.mods.togglechat.config;
 
 import cc.hyperium.Hyperium;
 import cc.hyperium.mods.togglechat.ToggleChatMod;
-import cc.hyperium.mods.togglechat.toggles.ToggleBase;
 import cc.hyperium.utils.BetterJsonObject;
 
 import java.io.BufferedReader;
@@ -48,11 +47,9 @@ public class ToggleChatConfig {
     public void loadToggles() {
         if (exists(toggleFile)) {
             try {
-                FileReader fileReader = new FileReader(toggleFile);
-                BufferedReader reader = new BufferedReader(fileReader);
-                toggleJson = new BetterJsonObject(reader.lines().collect(Collectors.joining()));
-                fileReader.close();
-                reader.close();
+                try(FileReader fileReader = new FileReader(toggleFile); BufferedReader reader = new BufferedReader(fileReader)) {
+                    toggleJson = new BetterJsonObject(reader.lines().collect(Collectors.joining()));
+                }
             } catch (Exception ex) {
                 log("Could not read toggles properly, saving.");
                 saveToggles();

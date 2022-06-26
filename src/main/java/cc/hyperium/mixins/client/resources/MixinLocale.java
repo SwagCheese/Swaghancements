@@ -26,7 +26,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.function.Supplier;
 
 @Mixin(Locale.class)
 public abstract class MixinLocale {

@@ -18,7 +18,6 @@
 package cc.hyperium.mods.autogg.config;
 
 import cc.hyperium.Hyperium;
-import cc.hyperium.config.Category;
 import cc.hyperium.config.ConfigOpt;
 import cc.hyperium.config.SliderSetting;
 import cc.hyperium.config.ToggleSetting;

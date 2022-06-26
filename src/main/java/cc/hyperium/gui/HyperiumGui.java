@@ -140,12 +140,12 @@ public abstract class HyperiumGui extends GuiScreen {
         int startColor = Color.HSBtoRGB(System.currentTimeMillis() % 5000L / 5000.0f, 0.8f, 0.8f);
         int endColor = Color.HSBtoRGB((System.currentTimeMillis() + 500) % 5000L / 5000.0f, 0.8f, 0.8f);
 
-        float f1 = (float) (startColor >> 16 & 255) / 255.0F;
-        float f2 = (float) (startColor >> 8 & 255) / 255.0F;
-        float f3 = (float) (startColor & 255) / 255.0F;
-        float f5 = (float) (endColor >> 16 & 255) / 255.0F;
-        float f6 = (float) (endColor >> 8 & 255) / 255.0F;
-        float f7 = (float) (endColor & 255) / 255.0F;
+        float f1 = (startColor >> 16 & 255) / 255.0F;
+        float f2 = (startColor >> 8 & 255) / 255.0F;
+        float f3 = (startColor & 255) / 255.0F;
+        float f5 = (endColor >> 16 & 255) / 255.0F;
+        float f6 = (endColor >> 8 & 255) / 255.0F;
+        float f7 = (endColor & 255) / 255.0F;
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
@@ -206,8 +206,8 @@ public abstract class HyperiumGui extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        mouseX = (int) (mouseX * ((float) Minecraft.getMinecraft().gameSettings.guiScale) / (float) guiScale);
-        mouseY = (int) (mouseY * ((float) Minecraft.getMinecraft().gameSettings.guiScale) / (float) guiScale);
+        mouseX = (int) (mouseX * ((float) Minecraft.getMinecraft().gameSettings.guiScale) / guiScale);
+        mouseY = (int) (mouseY * ((float) Minecraft.getMinecraft().gameSettings.guiScale) / guiScale);
 
         for (Map.Entry<GuiBlock, Runnable> entry : actions.entrySet()) {
             if (entry.getKey().isMouseOver(mouseX, mouseY)) {
@@ -262,8 +262,8 @@ public abstract class HyperiumGui extends GuiScreen {
     protected void drawScaledText(String text, int trueX, int trueY, double scaleFac, int color, boolean shadow, boolean centered) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(scaleFac, scaleFac, scaleFac);
-        fontRendererObj.drawString(text, (float) (((double) trueX) / scaleFac) - (centered ? fontRendererObj.getStringWidth(text) / 2f : 0),
-            (float) (((double) trueY) / scaleFac), color, shadow);
+        fontRendererObj.drawString(text, (float) (trueX / scaleFac) - (centered ? fontRendererObj.getStringWidth(text) / 2f : 0),
+            (float) (trueY / scaleFac), color, shadow);
         GlStateManager.scale(1 / scaleFac, 1 / scaleFac, 1 / scaleFac);
         GlStateManager.popMatrix();
     }

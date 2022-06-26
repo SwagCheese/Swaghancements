@@ -19,7 +19,6 @@ package cc.hyperium.mods.levelhead.display;
 
 import cc.hyperium.mods.levelhead.Levelhead;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.network.NetworkPlayerInfo;
 
 import java.util.ArrayList;
 import java.util.Objects;

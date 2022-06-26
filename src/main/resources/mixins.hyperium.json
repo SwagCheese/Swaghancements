@@ -104,6 +104,7 @@
     "nbt.MixinNBTTagCompound",
     "nbt.MixinNBTUtil",
     "network.MixinNetworkManager",
+    "network.MixinNetHandlerPlayClient",
     "network.play.client.MixinC01PacketChatMessage",
     "network.play.server.MixinS2EPacketCloseWindow",
     "network.play.server.MixinS14PacketEntity",

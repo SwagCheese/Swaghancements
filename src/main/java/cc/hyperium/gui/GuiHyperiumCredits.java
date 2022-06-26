@@ -46,16 +46,16 @@ import java.util.stream.StreamSupport;
 
 public class GuiHyperiumCredits extends HyperiumGui {
 
-    private static LinkedHashMap<String, DynamicTexture> contributors = new LinkedHashMap<>();
-    private static HashMap<String, Integer> commits = new HashMap<>();
+    private static final LinkedHashMap<String, DynamicTexture> contributors = new LinkedHashMap<>();
+    private static final HashMap<String, Integer> commits = new HashMap<>();
     private static String err = "";
 
     static {
         System.setProperty("http.agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-        Multithreading.runAsync(() -> fetch(1));
+        Multithreading.runAsync(() -> fetch("https://api.github.com/repos/SwagCheese/Swaghancements/stats/contributors", 1));
     }
 
-    private GuiScreen prevGui;
+    private final GuiScreen prevGui;
     private int offY;
 
     GuiHyperiumCredits(GuiScreen prevGui) {
@@ -63,6 +63,7 @@ public class GuiHyperiumCredits extends HyperiumGui {
     }
 
     @Override
+    @SuppressWarnings("java:S3358") // suppress solarlint warning about nested ternary operators (shorthand if statements)
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
@@ -83,7 +84,7 @@ public class GuiHyperiumCredits extends HyperiumGui {
 
     @Override
     protected void pack() {
-
+        // pack implementation not needed for this class
     }
 
     @Override
@@ -91,7 +92,7 @@ public class GuiHyperiumCredits extends HyperiumGui {
         super.handleMouseInput();
         int i = Mouse.getEventDWheel();
 
-        if (i < 0 && offY > -240) offY -= 20; // todo: not hardcode this
+        if (i < 0 && offY > -240) offY -= 20; // TODO: not hardcode this
         else if (i > 0 && offY < 0) offY += 20;
     }
 
@@ -104,13 +105,12 @@ public class GuiHyperiumCredits extends HyperiumGui {
         super.keyTyped(typedChar, keyCode);
     }
 
-    private static void fetch(int tries) {
+    private static void fetch(String repo, int tries) {
         try {
-            String content = IOUtils.toString(URI.create("https://api.github.com/repos/HyperiumClient/Hyperium/stats/contributors"), StandardCharsets.UTF_8);
+            String content = IOUtils.toString(URI.create(repo), StandardCharsets.UTF_8);
             JsonParser parser = new JsonParser();
             JsonArray a = parser.parse(content).getAsJsonArray();
-            StreamSupport.stream(a.spliterator(), false).map(JsonElement::getAsJsonObject).filter(o -> o.has("total") &
-                o.get("total").getAsInt() > 20).sorted(Comparator.comparingLong(o -> ((JsonObject) o).get("total").getAsInt()).reversed()).forEach(o -> {
+            StreamSupport.stream(a.spliterator(), false).map(JsonElement::getAsJsonObject).filter(o -> o.has("total") && o.get("total").getAsInt() > 10).sorted(Comparator.comparingLong(o -> ((JsonObject) o).get("total").getAsInt()).reversed()).forEach(o -> {
                 JsonObject con = o.get("author").getAsJsonObject();
 
                 try {
@@ -126,13 +126,16 @@ public class GuiHyperiumCredits extends HyperiumGui {
                             e.printStackTrace();
                         }
                     }).get();
-                } catch (IOException | InterruptedException | ExecutionException e) {
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
+                } catch (IOException | ExecutionException e) {
                     e.printStackTrace();
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
-            if (tries < 5) fetch(tries + 1);
+            if (tries < 5) fetch(repo, tries + 1);
             else err = e.getMessage();
         }
     }

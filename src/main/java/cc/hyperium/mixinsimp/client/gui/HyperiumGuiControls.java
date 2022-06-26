@@ -18,9 +18,7 @@
 package cc.hyperium.mixinsimp.client.gui;
 
 import cc.hyperium.gui.keybinds.GuiKeybinds;
-import cc.hyperium.mods.sk1ercommon.ResolutionUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;

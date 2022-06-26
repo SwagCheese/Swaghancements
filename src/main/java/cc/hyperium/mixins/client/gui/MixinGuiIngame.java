@@ -44,7 +44,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
-import java.util.stream.IntStream;
 
 @Mixin(GuiIngame.class)
 public abstract class MixinGuiIngame extends Gui {

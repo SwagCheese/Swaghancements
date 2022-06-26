@@ -27,7 +27,6 @@ import cc.hyperium.internal.addons.AddonManifest;
 import cc.hyperium.mods.timechanger.TimeChanger;
 import cc.hyperium.network.LoginReplyHandler;
 import cc.hyperium.utils.ChatColor;
-import com.google.common.base.Charsets;
 import com.google.common.collect.ObjectArrays;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
@@ -44,7 +43,6 @@ import net.minecraft.network.PacketThreadUtil;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.*;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -176,34 +174,32 @@ public abstract class MixinNetHandlerPlayClient {
             if (readableBytes > 0) {
                 byte[] payload = new byte[readableBytes - 1];
                 packetBuffer.readBytes(payload);
-                String message = new String(payload, Charsets.UTF_8);
+                String message = new String(payload, StandardCharsets.UTF_8);
 
                 if (LoginReplyHandler.SHOW_MESSAGES) {
                     GeneralChatHandler.instance().sendMessage("Packet message on channel " + packetIn.getChannelName() + " -> " + message);
                 }
 
-                if ("REGISTER".equalsIgnoreCase(packetIn.getChannelName())) {
-                    if (message.contains("Hyperium")) {
-                        PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-                        buffer.writeString("Hyperium;" + Metadata.getVersion() + ";" + Metadata.getVersionID());
-                        addToSendQueue(new C17PacketCustomPayload("REGISTER", buffer));
-                        PacketBuffer addonbuffer = new PacketBuffer(Unpooled.buffer());
-                        List<AddonManifest> addons = AddonBootstrap.INSTANCE.getAddonManifests();
-                        addonbuffer.writeInt(addons.size());
+                if ("REGISTER".equalsIgnoreCase(packetIn.getChannelName()) && message.contains("Hyperium")) {
+                    PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
+                    buffer.writeString("Hyperium;" + Metadata.getVersion() + ";" + Metadata.getVersionID());
+                    addToSendQueue(new C17PacketCustomPayload("REGISTER", buffer));
+                    PacketBuffer addonbuffer = new PacketBuffer(Unpooled.buffer());
+                    List<AddonManifest> addons = AddonBootstrap.INSTANCE.getAddonManifests();
+                    addonbuffer.writeInt(addons.size());
 
-                        for (AddonManifest addonmanifest : addons) {
-                            String addonName = addonmanifest.getName();
-                            String version = addonmanifest.getVersion();
+                    for (AddonManifest addonmanifest : addons) {
+                        String addonName = addonmanifest.getName();
+                        String version = addonmanifest.getVersion();
 
-                            if (addonName == null) addonName = addonmanifest.getMainClass();
-                            if (version == null) version = "unknown";
+                        if (addonName == null) addonName = addonmanifest.getMainClass();
+                        if (version == null) version = "unknown";
 
-                            addonbuffer.writeString(addonName);
-                            addonbuffer.writeString(version);
-                        }
-
-                        addToSendQueue(new C17PacketCustomPayload("hyperium|Addons", addonbuffer));
+                        addonbuffer.writeString(addonName);
+                        addonbuffer.writeString(version);
                     }
+
+                    addToSendQueue(new C17PacketCustomPayload("hyperium|Addons", addonbuffer));
                 }
             }
         } catch (Exception ex) {
@@ -281,5 +277,16 @@ public abstract class MixinNetHandlerPlayClient {
             // This will then trigger the other chat event
             gameController.ingameGUI.getChatGUI().printChatMessage(event.getChat());
         }
+    }
+
+    /**
+     * Pretend to be lunar client when joining servers
+     *
+     * @author SwagCheese
+     * @reason Pretend to be lunar client to join servers such as lunar.gg
+     */
+    @Inject(method = {"handleJoinGame"}, at = {@At("RETURN")})
+    private void handleJoinGame(CallbackInfo callbackInfo) {
+        this.netManager.sendPacket(new C17PacketCustomPayload("REGISTER", new PacketBuffer(Unpooled.buffer().writeBytes("Lunar-Client".getBytes()))));
     }
 }

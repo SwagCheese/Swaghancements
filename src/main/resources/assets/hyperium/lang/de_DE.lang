@@ -218,6 +218,7 @@ gui.category.misc=Sonstiges
 gui.category.mods=Modifikationen
 gui.category.hypixel=Hypixel
 gui.category.addons=Addons
+gui.category.hacks=Hacks
 
 # Settings Subcategories
 gui.subcategory.animations=Animations

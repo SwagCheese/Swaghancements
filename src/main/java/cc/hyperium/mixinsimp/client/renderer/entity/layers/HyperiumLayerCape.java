@@ -20,7 +20,6 @@ package cc.hyperium.mixinsimp.client.renderer.entity.layers;
 import cc.hyperium.Hyperium;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.layers.LayerCape;
 
 public class HyperiumLayerCape {
 

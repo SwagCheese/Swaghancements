@@ -42,11 +42,9 @@ public class DefaultConfig {
         file = configFile;
         try {
             if (configFile.exists()) {
-                FileReader fr = new FileReader(file);
-                BufferedReader br = new BufferedReader(fr);
-                config = new JsonParser().parse(br.lines().collect(Collectors.joining())).getAsJsonObject();
-                fr.close();
-                br.close();
+                try(FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr)) {
+                    config = new JsonParser().parse(br.lines().collect(Collectors.joining())).getAsJsonObject();
+                }
             } else {
                 config = new JsonObject();
                 saveFile();
@@ -59,12 +57,11 @@ public class DefaultConfig {
     private void saveFile() {
         try {
             file.createNewFile();
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(gson.toJson(config));
-            bw.close();
-            fw.close();
-        } catch (Exception ignored) {
+            try (FileWriter fw = new FileWriter(file); BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(gson.toJson(config));
+            }
+        } catch (Exception e) {
+            // ignore exception
         }
     }
 

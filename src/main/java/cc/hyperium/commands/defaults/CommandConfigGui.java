@@ -22,7 +22,6 @@ import cc.hyperium.gui.hyperium.HyperiumMainGui;
 import cc.hyperium.utils.ChatColor;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
