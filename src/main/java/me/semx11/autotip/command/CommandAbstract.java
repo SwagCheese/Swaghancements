@@ -7,7 +7,7 @@ public abstract class CommandAbstract implements BaseCommand {
 
     public final Autotip autotip;
 
-    public CommandAbstract(Autotip autotip) {
+    protected CommandAbstract(Autotip autotip) {
         this.autotip = autotip;
     }
 

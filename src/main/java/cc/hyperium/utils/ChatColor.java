@@ -85,7 +85,7 @@ public enum ChatColor {
      * @return the string without any color formatting
      */
     public static String stripColor(final String input) {
-        return input == null ? null : Pattern.compile("(?i)" + COLOR_CHAR + "[0-9A-FK-OR]").matcher(input).replaceAll("");
+        return input == null ? null : Pattern.compile("(?i)" + COLOR_CHAR + "[\\dA-FK-OR]").matcher(input).replaceAll("");
     }
 
     /**

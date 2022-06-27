@@ -18,7 +18,6 @@
 package cc.hyperium.utils;
 
 import cc.hyperium.Metadata;
-import com.google.common.base.Charsets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
@@ -27,16 +26,17 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Cubxity
  */
 public class UpdateUtils {
-
+    // TODO: migrate this to use the github api for the swaghancements repo
     public static UpdateUtils INSTANCE = new UpdateUtils();
 
     private static final HttpClient client = HttpClients.createDefault();
-    private VersionAPIUtils apiUtils = new VersionAPIUtils();
+    private final VersionAPIUtils apiUtils = new VersionAPIUtils();
 
     public static JsonHolder get(String url) {
         try {
@@ -48,7 +48,7 @@ public class UpdateUtils {
     }
 
     public static String getRaw(String url) throws IOException {
-        return IOUtils.toString(client.execute(new HttpGet(url)).getEntity().getContent(), Charsets.UTF_8);
+        return IOUtils.toString(client.execute(new HttpGet(url)).getEntity().getContent(), StandardCharsets.UTF_8);
     }
 
     public boolean isAbsoluteLatest() {

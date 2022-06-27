@@ -36,7 +36,7 @@ class Rectangle(
     fun getShadowOffset(): Vector2f = shadow.offset
     fun getShadowOffsetX(): Float = shadow.offset.x
     fun getShadowOffsetY(): Float = shadow.offset.y
-    fun setShadowOffset(x: Float, y: Float) = apply {
+    private fun setShadowOffset(x: Float, y: Float) = apply {
         this.shadow.offset.x = x
         this.shadow.offset.y = y
     }
@@ -45,7 +45,7 @@ class Rectangle(
     fun setShadowOffsetY(y: Float) = apply { this.shadow.offset.y = y }
 
     fun getShadowColor(): Int = shadow.color
-    fun setShadowColor(color: Int) = apply { this.shadow.color = color }
+    private fun setShadowColor(color: Int) = apply { this.shadow.color = color }
 
     fun setShadow(color: Int, x: Float, y: Float) = apply {
         setShadow(true)
@@ -54,13 +54,13 @@ class Rectangle(
     }
 
     fun getOutline(): Boolean = outline.on
-    fun setOutline(outline: Boolean) = apply { this.outline.on = outline }
+    private fun setOutline(outline: Boolean) = apply { this.outline.on = outline }
 
     fun getOutlineColor(): Int = outline.color
-    fun setOutlineColor(color: Int) = apply { this.outline.color = color }
+    private fun setOutlineColor(color: Int) = apply { this.outline.color = color }
 
     fun getThickness(): Float = outline.thickness
-    fun setThickness(thickness: Float) = apply { this.outline.thickness = thickness }
+    private fun setThickness(thickness: Float) = apply { this.outline.thickness = thickness }
 
     fun setOutline(color: Int, thickness: Float) = apply {
         setOutline(true)

@@ -64,7 +64,7 @@ public class HyperiumGuiScreenResourcePacks {
                 .filter(resourcePackListEntry -> {
                 try {
                     String name = ChatColor.stripColor(((IMixinResourcePackListEntry) resourcePackListEntry).callFunc_148312_b().
-                        replaceAll("[^A-Za-z0-9 ]", "").trim().toLowerCase());
+                        replaceAll("[^A-Za-z\\d ]", "").trim().toLowerCase());
                     String text = searchField.getText().toLowerCase();
 
                     if (name.endsWith("zip")) {

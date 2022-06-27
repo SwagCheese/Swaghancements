@@ -44,13 +44,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderPlayer.class)
 public abstract class MixinRenderPlayer extends RendererLivingEntity<AbstractClientPlayer> {
 
-    private HyperiumRenderPlayer hyperiumRenderPlayer = new HyperiumRenderPlayer((RenderPlayer) (Object) this);
+    private final HyperiumRenderPlayer hyperiumRenderPlayer = new HyperiumRenderPlayer((RenderPlayer) (Object) this);
 
-    public MixinRenderPlayer(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn) {
+    protected MixinRenderPlayer(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn) {
         super(renderManagerIn, modelBaseIn, shadowSizeIn);
     }
 
     @Shadow
+    @Override
     public abstract ModelPlayer getMainModel();
 
     /**
@@ -67,7 +68,7 @@ public abstract class MixinRenderPlayer extends RendererLivingEntity<AbstractCli
         return (U) new TwoPartLayerBipedArmor(this);
     }
 
-    @Inject(method = "doRender", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "doRender(Lnet/minecraft/client/entity/AbstractClientPlayer;DDDFF)V", at = @At("HEAD"))
     private void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         GlStateManager.resetColor();
 
@@ -89,6 +90,7 @@ public abstract class MixinRenderPlayer extends RendererLivingEntity<AbstractCli
      * @author Sk1er
      * @reason Cancel nametag render event when score is renderer
      */
+    @Override
     @Overwrite
     protected void renderOffsetLivingLabel(AbstractClientPlayer entityIn, double x, double y, double z, String str, float p_177069_9_, double p_177069_10_) {
         if (p_177069_10_ < 100.0D) {
@@ -100,7 +102,7 @@ public abstract class MixinRenderPlayer extends RendererLivingEntity<AbstractCli
                 RenderNameTagEvent.CANCEL = true;
                 if (entityIn != Minecraft.getMinecraft().thePlayer) {
                     renderLivingLabel(entityIn, score.getScorePoints() + " " + scoreobjective.getDisplayName(), x, y, z, 64);
-                    y += (float) getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * p_177069_9_;
+                    y += getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * p_177069_9_;
                 }
 
                 RenderNameTagEvent.CANCEL = false;

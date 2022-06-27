@@ -28,7 +28,7 @@ import net.minecraft.util.BlockPos;
 
 public class HyperiumRenderChunk {
 
-    private RenderChunk parent;
+    private final RenderChunk parent;
     private AnimationHandler handler;
 
     public HyperiumRenderChunk(RenderChunk parent) {

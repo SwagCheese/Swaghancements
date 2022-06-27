@@ -71,7 +71,7 @@ public abstract class MixinGuiScreen {
         mc.dispatchKeypresses();
     }
 
-    @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "drawScreen", at = @At("HEAD"))
     private void drawScreen(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         hyperiumGuiScreen.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -113,7 +113,8 @@ public abstract class MixinGuiScreen {
         Hyperium.INSTANCE.getHandlers().getHyperiumCommandHandler().runningCommand = true;
     }
 
-    private int scrollX, scrollY;
+    private int scrollX;
+    private int scrollY;
     private boolean allowScrolling;
 
     /**

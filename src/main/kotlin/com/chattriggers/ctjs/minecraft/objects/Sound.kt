@@ -37,23 +37,6 @@ class Sound(private val config: ScriptObjectMirror) {
     private val source: String = config["source"] as String*/
     var isListening = false
 
-    init {
-        /*if (World.isLoaded()) {
-            loadSndSystem()
-
-            try {
-                bootstrap()
-            } catch (e: MalformedURLException) {
-                e.printStackTrace()
-            }
-
-        } else {
-            isListening = true
-        }
-
-        CTJS.sounds.add(this)*/
-    }
-
     fun onWorldLoad() {
         /*isListening = false
 

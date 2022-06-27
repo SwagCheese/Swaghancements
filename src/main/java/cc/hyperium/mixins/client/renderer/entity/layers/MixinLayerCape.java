@@ -28,9 +28,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LayerCape.class)
 public class MixinLayerCape {
 
-    private HyperiumLayerCape hyperiumLayerCape = new HyperiumLayerCape();
+    private final HyperiumLayerCape hyperiumLayerCape = new HyperiumLayerCape();
 
-    @Inject(method = "doRenderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPlayer;renderCape(F)V", ordinal = 0))
+    @Inject(method = "doRenderLayer(Lnet/minecraft/client/entity/AbstractClientPlayer;FFFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPlayer;renderCape(F)V", ordinal = 0))
     private void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks,
                                float ageInTicks, float netHeadYaw, float headPitch, float scale, CallbackInfo ci) {
         hyperiumLayerCape.doRenderLayer(entitylivingbaseIn);

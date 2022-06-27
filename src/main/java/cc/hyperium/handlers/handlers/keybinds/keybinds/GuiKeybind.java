@@ -23,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 
 public class GuiKeybind extends HyperiumBind {
     public GuiKeybind() {
-        super("Hyperium GUI", Keyboard.KEY_GRAVE);
+        super("Swaghancements GUI", Keyboard.KEY_GRAVE);
     }
 
     @Override

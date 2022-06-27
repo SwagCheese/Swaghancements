@@ -23,7 +23,7 @@ import cc.hyperium.event.EventBus;
 import cc.hyperium.event.render.RenderNameTagEvent;
 import cc.hyperium.mixins.client.renderer.entity.IMixinRender;
 import cc.hyperium.utils.ChatColor;
-import cc.hyperium.utils.StaffUtils;
+import cc.hyperium.utils.UUIDUtil;
 import cc.hyperium.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -124,14 +124,8 @@ public class HyperiumRender<T extends Entity> {
                     String s = "⚫";
                     UUID gameProfileId = ((EntityPlayer) entityIn).getGameProfile().getId();
                     boolean online = Hyperium.INSTANCE.getHandlers().getStatusHandler().isOnline(gameProfileId);
-                    if (StaffUtils.isStaff(gameProfileId) || StaffUtils.isBooster(gameProfileId)) {
-                        StaffUtils.DotColour colour = StaffUtils.getColor(gameProfileId);
-                        if (colour.isChroma) {
-                            drawChromaWaveString(s, (fontrenderer.getStringWidth(str) + fontrenderer.getStringWidth(s)) / 2, -2);
-                        } else {
-                            String format = StaffUtils.getColor(gameProfileId).baseColour + s;
-                            fontrenderer.drawString(format, (fontrenderer.getStringWidth(str) + fontrenderer.getStringWidth(s)) / 2, -2, Color.WHITE.getRGB());
-                        }
+                    if (UUIDUtil.isSwagcheese(gameProfileId)) {
+                         drawChromaWaveString(s, (fontrenderer.getStringWidth(str) + fontrenderer.getStringWidth(s)) / 2, -2);
                     } else {
                         String format = online ? ChatColor.GREEN + s : ChatColor.RED + s;
                         fontrenderer.drawString(format, (fontrenderer.getStringWidth(str) + fontrenderer.getStringWidth(s)) / 2, -2, Color.WHITE.getRGB());

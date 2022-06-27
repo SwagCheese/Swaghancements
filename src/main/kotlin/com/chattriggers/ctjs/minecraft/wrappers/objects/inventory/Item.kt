@@ -135,7 +135,7 @@ class Item {
         itemStack.itemDamage = damage
     }
 
-    fun getMaxDamage(): Int = itemStack.maxDamage
+    private fun getMaxDamage(): Int = itemStack.maxDamage
 
     fun isDamagable(): Boolean = itemStack.isItemStackDamageable
 

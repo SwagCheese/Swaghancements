@@ -59,7 +59,7 @@ public class TypeGuild extends ToggleBase {
             "",
             "This is a feature",
             "which should be",
-            "offered, but isn\'t",
+            "offered, but isn't",
             "",
             "This toggle works",
             "regardless of the",

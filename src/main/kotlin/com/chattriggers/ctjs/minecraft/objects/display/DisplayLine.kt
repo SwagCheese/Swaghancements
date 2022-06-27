@@ -68,7 +68,7 @@ abstract class DisplayLine {
     }
 
     fun getAlign(): DisplayHandler.Align? = align
-    fun setAlign(align: Any?) = apply {
+    private fun setAlign(align: Any?) = apply {
         this.align = when (align) {
             is String -> DisplayHandler.Align.valueOf(align.toUpperCase())
             is DisplayHandler.Align -> align
@@ -77,7 +77,7 @@ abstract class DisplayLine {
     }
 
     fun getBackground(): DisplayHandler.Background? = background
-    fun setBackground(background: Any?) = apply {
+    private fun setBackground(background: Any?) = apply {
         this.background = when (background) {
             is String -> DisplayHandler.Background.valueOf(background.toUpperCase().replace(" ", "_"))
             is DisplayHandler.Background -> background

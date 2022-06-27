@@ -68,7 +68,7 @@ public abstract class MixinNetHandlerPlayClient {
 
     @Shadow private WorldClient clientWorldController;
     @Shadow private Minecraft gameController;
-    @Shadow public abstract void addToSendQueue(Packet packet);
+    @Shadow public abstract void addToSendQueue(Packet<?> packet);
 
     private TimeChanger timeChanger = Hyperium.INSTANCE.getModIntegration().getTimeChanger();
 
@@ -161,6 +161,8 @@ public abstract class MixinNetHandlerPlayClient {
                 case 5:
                     gameController.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC);
                     break;
+                default:
+                    Hyperium.LOGGER.warn("Unknown packet animation type");
             }
         }
     }
@@ -184,9 +186,9 @@ public abstract class MixinNetHandlerPlayClient {
                     PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
                     buffer.writeString("Hyperium;" + Metadata.getVersion() + ";" + Metadata.getVersionID());
                     addToSendQueue(new C17PacketCustomPayload("REGISTER", buffer));
-                    PacketBuffer addonbuffer = new PacketBuffer(Unpooled.buffer());
+                    PacketBuffer addonBuffer = new PacketBuffer(Unpooled.buffer());
                     List<AddonManifest> addons = AddonBootstrap.INSTANCE.getAddonManifests();
-                    addonbuffer.writeInt(addons.size());
+                    addonBuffer.writeInt(addons.size());
 
                     for (AddonManifest addonmanifest : addons) {
                         String addonName = addonmanifest.getName();
@@ -195,11 +197,11 @@ public abstract class MixinNetHandlerPlayClient {
                         if (addonName == null) addonName = addonmanifest.getMainClass();
                         if (version == null) version = "unknown";
 
-                        addonbuffer.writeString(addonName);
-                        addonbuffer.writeString(version);
+                        addonBuffer.writeString(addonName);
+                        addonBuffer.writeString(version);
                     }
 
-                    addToSendQueue(new C17PacketCustomPayload("hyperium|Addons", addonbuffer));
+                    addToSendQueue(new C17PacketCustomPayload("hyperium|Addons", addonBuffer));
                 }
             }
         } catch (Exception ex) {

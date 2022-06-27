@@ -17,6 +17,8 @@
 
 package cc.hyperium.mods.sk1ercommon;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,7 +34,7 @@ public class Multithreading {
         final AtomicInteger counter = new AtomicInteger(0);
 
         @Override
-        public Thread newThread(Runnable r) {
+        public Thread newThread(@NotNull Runnable r) {
             return new Thread(r, String.format("Thread %s", counter.incrementAndGet()));
         }
     });
@@ -41,7 +43,7 @@ public class Multithreading {
         private final AtomicInteger counter = new AtomicInteger(0);
 
         @Override
-        public Thread newThread(Runnable r) {
+        public Thread newThread(@NotNull Runnable r) {
             return new Thread(r, "Thread " + counter.incrementAndGet());
         }
     });

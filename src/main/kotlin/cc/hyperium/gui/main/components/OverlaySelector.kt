@@ -26,7 +26,7 @@ import java.util.function.Supplier
 @Deprecated("Soon to be removed, please refrain from using.")
 class OverlaySelector<T> @JvmOverloads constructor(
     label: String,
-    var selected: T,
+    private var selected: T,
     val callback: Consumer<T>,
     val items: Supplier<Array<T>>,
     var enabled: Boolean = true

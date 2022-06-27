@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ChatComponentStyle.class)
 public abstract class MixinChatComponentStyle implements IChatComponent {
 
-    private HyperiumChatComponentStyle hyperiumChatComponentStyle = new HyperiumChatComponentStyle();
+    private final HyperiumChatComponentStyle hyperiumChatComponentStyle = new HyperiumChatComponentStyle();
 
     @Shadow
     public abstract ChatStyle getChatStyle();
 
-    @Inject(method = "setChatStyle", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setChatStyle", at = @At("HEAD"))
     private void setChatStyle(ChatStyle style, CallbackInfoReturnable<IChatComponent> ci) {
         hyperiumChatComponentStyle.invalidateCache();
     }

@@ -29,8 +29,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 public class VersionAPIUtils {
-    private HttpClient httpClient;
-    private String versionsUrl = "https://api.hyperium.cc/versions";
+    private final HttpClient httpClient;
 
     public VersionAPIUtils() {
         httpClient = HttpClients.createDefault();
@@ -43,6 +42,7 @@ public class VersionAPIUtils {
 
     public JsonObject getJson() {
         JsonParser parser = new JsonParser();
+        String versionsUrl = "https://api.hyperium.cc/versions";
         return parser.parse(getRaw(httpClient, versionsUrl)).getAsJsonObject();
     }
 

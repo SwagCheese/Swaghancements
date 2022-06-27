@@ -39,12 +39,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings("java:S2160") // suppress solarlint warning about not overriding the .equals method
 @Mixin(AbstractClientPlayer.class)
 public abstract class MixinAbstractClientPlayer extends EntityPlayer {
 
     private HyperiumCapeHandler hook;
 
-    public MixinAbstractClientPlayer(World worldIn, GameProfile gameProfileIn) {
+    protected MixinAbstractClientPlayer(World worldIn, GameProfile gameProfileIn) {
         super(worldIn, gameProfileIn);
     }
 
@@ -55,7 +56,7 @@ public abstract class MixinAbstractClientPlayer extends EntityPlayer {
 
     /**
      * @author - Kevin & Sk1er
-     * @reason - Custom Cape Support
+     * Custom Cape Support
      */
     @Inject(method = "getLocationCape", at = @At("HEAD"), cancellable = true)
     private void getHyperiumCape(CallbackInfoReturnable<ResourceLocation> cir) {
@@ -77,7 +78,7 @@ public abstract class MixinAbstractClientPlayer extends EntityPlayer {
         }
 
         IAttributeInstance iAttributeInstance = getEntityAttribute(SharedMonsterAttributes.movementSpeed);
-        f = (float) ((double) f * ((iAttributeInstance.getAttributeValue() / (double) capabilities.getWalkSpeed() + 1.0D) / 2.0D));
+        f = (float) (f * ((iAttributeInstance.getAttributeValue() / capabilities.getWalkSpeed() + 1.0D) / 2.0D));
 
         if (capabilities.getWalkSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f)) {
             f = 1.0F;
@@ -85,7 +86,7 @@ public abstract class MixinAbstractClientPlayer extends EntityPlayer {
 
         if (isUsingItem() && getItemInUse().getItem() == Items.bow) {
             int duration = getItemInUseDuration();
-            float f1 = (float) duration / 20.0F;
+            float f1 = duration / 20.0F;
 
             if (f1 > 1.0F) {
                 f1 = 1.0F;

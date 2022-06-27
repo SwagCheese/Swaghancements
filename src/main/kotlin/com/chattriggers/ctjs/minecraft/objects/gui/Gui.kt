@@ -25,7 +25,7 @@ abstract class Gui : GuiScreen() {
     private var mouseX = 0
     private var mouseY = 0
 
-    var doesPauseGame = false
+    private var doesPauseGame = false
 
     fun open() {
         GuiHandler.openGui(this)
@@ -35,7 +35,7 @@ abstract class Gui : GuiScreen() {
         if (isOpen()) Player.getPlayer()?.closeScreen()
     }
 
-    fun isOpen(): Boolean = Client.getMinecraft().currentScreen === this
+    private fun isOpen(): Boolean = Client.getMinecraft().currentScreen === this
 
     fun isControlDown(): Boolean = isCtrlKeyDown()
     fun isShiftDown(): Boolean = isShiftKeyDown()

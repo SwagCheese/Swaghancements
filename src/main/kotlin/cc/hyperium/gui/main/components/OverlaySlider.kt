@@ -37,7 +37,7 @@ class OverlaySlider @JvmOverloads constructor(
 ) : OverlayLabel(label, enabled, Runnable { }) {
     private val fr = HyperiumFontRenderer("Arial", Font.PLAIN, 20)
 
-    var updated = false
+    private var updated = false
     override fun handleMouseInput(mouseX: Int, mouseY: Int, overlayX: Int, overlayY: Int, w: Int, h: Int) {
         if (mouseX >= overlayX + w - 105 && mouseX <= overlayX + w - 5 && mouseY >= overlayY && mouseY <= overlayY + h && Mouse.isButtonDown(
                 0

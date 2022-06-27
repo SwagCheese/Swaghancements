@@ -1,7 +1,7 @@
 package com.chattriggers.ctjs.minecraft.wrappers
 
-import com.chattriggers.ctjs.minecraft.libs.renderer.Renderer
 import cc.hyperium.mixins.client.gui.IMixinGuiChat
+import com.chattriggers.ctjs.minecraft.libs.renderer.Renderer
 import com.chattriggers.ctjs.minecraft.objects.KeyBind
 import com.chattriggers.ctjs.utils.kotlin.External
 import net.minecraft.client.Minecraft
@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.network.NetHandlerPlayClient
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
+import kotlin.math.roundToInt
 
 @External
 object Client {
@@ -115,9 +116,7 @@ object Client {
     fun getFreeMemory(): Long = Runtime.getRuntime().freeMemory()
 
     @JvmStatic
-    fun getMemoryUsage(): Int = Math.round(
-        (getTotalMemory() - getFreeMemory()) * 100 / getMaxMemory().toFloat()
-    )
+    fun getMemoryUsage(): Int = ((getTotalMemory() - getFreeMemory()) * 100 / getMaxMemory().toFloat()).roundToInt()
 
     @JvmStatic
     fun getSystemTime(): Long = Minecraft.getSystemTime()

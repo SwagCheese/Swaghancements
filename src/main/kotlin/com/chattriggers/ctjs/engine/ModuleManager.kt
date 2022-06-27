@@ -9,7 +9,7 @@ import com.chattriggers.ctjs.utils.console.Console
 import java.io.File
 
 object ModuleManager {
-    const val DEFAULT_MODULES = "PMManager"
+    private const val DEFAULT_MODULES = "PMManager"
 
 
     val loaders = mutableListOf<ILoader>()

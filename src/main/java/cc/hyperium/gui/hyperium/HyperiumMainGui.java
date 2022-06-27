@@ -52,9 +52,9 @@ import java.util.function.Supplier;
  */
 public class HyperiumMainGui extends HyperiumGui {
 
-    public static HyperiumMainGui INSTANCE = new HyperiumMainGui();
+    public static final HyperiumMainGui INSTANCE = new HyperiumMainGui();
     private static int tabIndex; // save tab position
-    public boolean show;
+    private boolean shouldShow;
     private final HashMap<Field, Supplier<String[]>> customStates = new HashMap<>();
     private final HashMap<Field, List<Consumer<Object>>> callbacks = new HashMap<>();
     private final List<Object> settingsObjects = new ArrayList<>();
@@ -64,10 +64,10 @@ public class HyperiumMainGui extends HyperiumGui {
     private final HyperiumFontRenderer title2;
     private final List<AbstractTab> tabs;
     private AbstractTab currentTab;
-    private List<RGBFieldSet> rgbFields = new ArrayList<>();
+    private final List<RGBFieldSet> rgbFields = new ArrayList<>();
     private Alert currentAlert;
     private MaterialTextField searchField;
-    private Queue<Alert> alerts = new ArrayDeque<>();
+    private final Queue<Alert> alerts = new ArrayDeque<>();
 
     private HyperiumMainGui() {
         smol = new HyperiumFontRenderer(Settings.GUI_FONT, 14.0F);
@@ -85,8 +85,8 @@ public class HyperiumMainGui extends HyperiumGui {
         settingsObjects.addAll(settingsHandler.getSettingsObjects());
         HashMap<Field, List<Consumer<Object>>> call1 = settingsHandler.getcallbacks();
         call1.forEach((key, value) -> callbacks.computeIfAbsent(key, tmp -> new ArrayList<>()).addAll(value));
-        HashMap<Field, Supplier<String[]>> customStates = settingsHandler.getCustomStates();
-        this.customStates.putAll(customStates);
+        HashMap<Field, Supplier<String[]>> customSettingsStates = settingsHandler.getCustomStates();
+        this.customStates.putAll(customSettingsStates);
 
         try {
             rgbFields.add(new RGBFieldSet(
@@ -125,7 +125,7 @@ public class HyperiumMainGui extends HyperiumGui {
 
     @Override
     protected void pack() {
-        show = false;
+        shouldShow = false;
         int yg = (height / 10);  // Y grid
         int xg = (width / 11);   // X grid
         searchField = new MaterialTextField(xg * 10 - 110, yg + (yg / 2 - 10), 100, 20,
@@ -262,6 +262,14 @@ public class HyperiumMainGui extends HyperiumGui {
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
         searchField.keyTyped(typedChar, keyCode);
+    }
+
+    public boolean isShouldShow() {
+        return shouldShow;
+    }
+
+    public void setShouldShow(boolean shouldShow) {
+        this.shouldShow = shouldShow;
     }
 
     /**

@@ -2,7 +2,6 @@ package com.chattriggers.ctjs.minecraft.wrappers.objects
 
 import com.chattriggers.ctjs.utils.kotlin.External
 import com.chattriggers.ctjs.utils.kotlin.MCChunk
-import java.util.stream.Collectors
 
 @External
 class Chunk(val chunk: MCChunk) {
@@ -11,7 +10,7 @@ class Chunk(val chunk: MCChunk) {
      *
      * @return the entity list
      */
-    fun getAllEntities(): List<Entity> {
+    private fun getAllEntities(): List<Entity> {
         return chunk.entityLists.toList().flatten().map {
             Entity(it)
         }

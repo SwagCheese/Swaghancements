@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import org.lwjgl.opengl.GL11
+import kotlin.math.sqrt
 
 @External
 object Tessellator {
@@ -215,7 +216,7 @@ object Tessellator {
         val dz = z - playerZ
 
         if (increase) {
-            val distance = Math.sqrt((dx * dx + dy * dy + dz * dz).toDouble()).toFloat()
+            val distance = sqrt((dx * dx + dy * dy + dz * dz).toDouble()).toFloat()
             val multiplier = distance / 120f //mobs only render ~120 blocks away
             scale *= 0.45f * multiplier
         }

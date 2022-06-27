@@ -90,7 +90,7 @@ class ListCompatibilityHack extends AbstractList<OverlayComponent> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends OverlayComponent> c) {
+    public boolean addAll(@NotNull Collection<? extends OverlayComponent> c) {
         return data.addAll(c);
     }
 

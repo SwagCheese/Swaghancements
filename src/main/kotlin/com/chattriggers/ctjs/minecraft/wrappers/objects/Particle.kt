@@ -3,7 +3,7 @@ package com.chattriggers.ctjs.minecraft.wrappers.objects
 import cc.hyperium.mixins.client.particle.IMixinEntityFX
 import com.chattriggers.ctjs.utils.kotlin.MCParticle
 
-class Particle(val underlyingEntity: MCParticle) {
+class Particle(private val underlyingEntity: MCParticle) {
     fun scale(scale: Float) {
         underlyingEntity.multipleParticleScaleBy(scale)
     }
@@ -30,7 +30,7 @@ class Particle(val underlyingEntity: MCParticle) {
         setColor(red, green, blue, alpha)
     }
 
-    fun setAlpha(a: Float) {
+    private fun setAlpha(a: Float) {
         underlyingEntity.setAlphaF(a)
     }
 

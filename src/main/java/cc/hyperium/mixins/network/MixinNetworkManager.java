@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetworkManager.class)
 class MixinNetworkManager {
 
-    @Inject(method = "channelRead0", at = @At(value = "FIELD", target = "Lnet/minecraft/network/NetworkManager;packetListener:Lnet/minecraft/network/INetHandler;"))
+    @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/Packet;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/network/NetworkManager;packetListener:Lnet/minecraft/network/INetHandler;"))
     private void channelRead0(ChannelHandlerContext context, Packet packet, CallbackInfo ci) {
         EventBus.INSTANCE.post(new PacketReceivedEvent(packet));
     }

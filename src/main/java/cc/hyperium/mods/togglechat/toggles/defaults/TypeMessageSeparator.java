@@ -32,7 +32,7 @@ public class TypeMessageSeparator extends ToggleBase {
 
     @Override
     public boolean shouldToggle(String message) {
-        return message.matches("^[-]+$");
+        return message.matches("^-+$");
     }
 
     public String editMessage(String formattedText) {

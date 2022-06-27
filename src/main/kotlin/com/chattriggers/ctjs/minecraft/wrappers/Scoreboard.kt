@@ -132,7 +132,7 @@ object Scoreboard {
         needsUpdate = true
     }
 
-    class Score(val score: net.minecraft.scoreboard.Score) {
+    class Score(private val score: net.minecraft.scoreboard.Score) {
         /**
          * Gets the score point value for this score,
          * i.e. the number on the right of the board

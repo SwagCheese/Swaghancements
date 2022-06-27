@@ -1,12 +1,14 @@
 package me.semx11.autotip.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Version implements Comparable<Version> {
 
     private String version;
 
     public Version(String version) {
         assert version != null : "Version can not be null";
-        assert version.matches("[0-9]+(\\.[0-9]+)*") : "Invalid version format";
+        assert version.matches("\\d+(\\.\\d+)*") : "Invalid version format";
         this.version = version;
     }
 
@@ -15,7 +17,7 @@ public class Version implements Comparable<Version> {
     }
 
     @Override
-    public int compareTo(Version that) {
+    public int compareTo(@NotNull Version that) {
         if (that == null) return 1;
         String[] thisParts = get().split("\\.");
         String[] thatParts = that.get().split("\\.");

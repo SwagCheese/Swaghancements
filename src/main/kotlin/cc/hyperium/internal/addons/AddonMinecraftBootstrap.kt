@@ -162,14 +162,12 @@ object AddonMinecraftBootstrap {
 
             dontLoad.addAll(toLoad.filter {
                 it.versionCode != VERSION_CODE
-            }.also {
-                it.forEach { addon ->
-                    val output =
-                        if (addon.versionCode != null) "Addon ${addon.name}'s version code (${addon.versionCode}) doesnt match our version code! $VERSION_CODE"
-                        else "Addon ${addon.name}'s version code is null. Please include a \'\"versionCode\": \"$VERSION_CODE\"\"\' in your addon.json file."
+            }.onEach { addon ->
+                val output =
+                    if (addon.versionCode != null) "Addon ${addon.name}'s version code (${addon.versionCode}) doesnt match our version code! $VERSION_CODE"
+                    else "Addon ${addon.name}'s version code is null. Please include a \'\"versionCode\": \"$VERSION_CODE\"\"\' in your addon.json file."
 
-                    Hyperium.LOGGER.error(output)
-                }
+                Hyperium.LOGGER.error(output)
             })
 
             toLoad.forEach { addon ->

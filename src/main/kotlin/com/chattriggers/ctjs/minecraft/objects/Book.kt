@@ -35,7 +35,7 @@ class Book(bookName: String) {
      * @param message the entire message for what the page should be
      * @return the current book to allow method chaining
      */
-    fun addPage(message: Message) = apply {
+    private fun addPage(message: Message) = apply {
         val pages = bookData["pages"] as NBTTagList
 
         pages.appendTag(
@@ -80,7 +80,7 @@ class Book(bookName: String) {
         updateBookScreen(pages)
     }
 
-    fun updateBookScreen(pages: NBTTagList) {
+    private fun updateBookScreen(pages: NBTTagList) {
         bookData.removeTag("pages")
         bookData["pages"] = pages
         book.tagCompound = bookData
@@ -99,7 +99,7 @@ class Book(bookName: String) {
         GuiHandler.openGui(bookScreen ?: return)
     }
 
-    fun isOpen(): Boolean = Client.getMinecraft().currentScreen === bookScreen
+    private fun isOpen(): Boolean = Client.getMinecraft().currentScreen === bookScreen
 
     fun getCurrentPage(): Int = if (!isOpen()) -1 else (bookScreen as IMixinGuiScreenBook).currPage
 

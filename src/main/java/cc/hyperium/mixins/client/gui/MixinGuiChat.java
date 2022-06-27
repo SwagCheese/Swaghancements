@@ -58,7 +58,7 @@ public class MixinGuiChat {
         return EnumChatFormatting.getTextWithoutFormattingCodes(completion);
     }
 
-    @ModifyVariable(method = "onAutocompleteResponse", at = @At("HEAD"))
+    @ModifyVariable(method = "onAutocompleteResponse", at = @At("HEAD"), argsOnly = true)
     private String[] remap(String[] in) {
         return NickHider.instance == null || !NickHider.instance.getNickHiderConfig().isMasterEnabled() ?
             in : NickHider.instance.tabComplete(in, inputField.getText());

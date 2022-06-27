@@ -52,7 +52,7 @@ public abstract class HyperiumGui extends GuiScreen {
     private ScaledResolution lastResolution;
     protected double scrollMultiplier = 1;
 
-    public HyperiumGui() {
+    protected HyperiumGui() {
         lastResolution = ResolutionUtil.current();
     }
 

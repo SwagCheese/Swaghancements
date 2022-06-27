@@ -35,8 +35,8 @@ public class ToggleChatConfig {
     private BetterJsonObject toggleJson = new BetterJsonObject();
 
     public ToggleChatConfig(ToggleChatMod theMod, File directory) {
-        if (!directory.exists()) {
-            directory.mkdirs();
+        if (!directory.exists() && !directory.mkdirs()) {
+            Hyperium.LOGGER.warn("Directory {} could not be created", directory.getAbsolutePath());
         }
 
         this.theMod = theMod;
@@ -65,11 +65,14 @@ public class ToggleChatConfig {
 
     public void saveToggles() {
         try {
-            if (!toggleFile.getParentFile().exists()) {
-                toggleFile.getParentFile().mkdirs();
+            if (!toggleFile.getParentFile().exists() && !toggleFile.getParentFile().mkdirs()) {
+                Hyperium.LOGGER.warn("Directory {} could not be created", toggleFile.getParentFile().getAbsolutePath());
             }
 
-            toggleFile.createNewFile();
+            if (!toggleFile.createNewFile()) {
+                Hyperium.LOGGER.info("File {} could not be created, it probably already exists", toggleFile.getAbsolutePath());
+            }
+
             theMod.getToggleHandler().getToggles().values().forEach(base -> toggleJson.addProperty("show" + base.getName().replace(" ", "_"), base.isEnabled()));
             toggleJson.writeToFile(toggleFile);
         } catch (Exception ex) {

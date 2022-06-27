@@ -52,7 +52,6 @@ import cc.hyperium.netty.UniversalNetty;
 import cc.hyperium.network.LoginReplyHandler;
 import cc.hyperium.network.NetworkHandler;
 import cc.hyperium.purchases.PurchaseApi;
-import cc.hyperium.utils.StaffUtils;
 import cc.hyperium.utils.UpdateUtils;
 import cc.hyperium.utils.mods.AddonCheckerUtil;
 import cc.hyperium.utils.mods.CompactChat;
@@ -222,10 +221,10 @@ public class Hyperium {
             CONFIG.register(new ToggleSprintContainer());
 
             SplashProgress.setProgress(7, I18n.format("splashprogress.startinghyperium"));
-            LOGGER.info("[Hyperium] Started!");
+            LOGGER.info("[Swaghancements] Started!");
 
             // Set the window title
-            Display.setTitle("Hyperium " + Metadata.getVersion());
+            Display.setTitle("Swaghancements " + Metadata.getVersion());
 
             SplashProgress.setProgress(8, I18n.format("splashprogress.registeringconfiguration"));
 
@@ -245,9 +244,6 @@ public class Hyperium {
             // Register mods & addons
             modIntegration = new HyperiumModIntegration();
             internalAddons = new InternalAddons();
-
-            // Fetch Hyperium staff members
-            fetchStaffMembers();
 
             // Add a thread for shutdowns
             Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
@@ -364,21 +360,6 @@ public class Hyperium {
         } catch (ClassNotFoundException e) {
             isDevEnv = false;
         }
-    }
-
-    /**
-     * Hyperium allows for custom dot colors for staff, so fetch the JSON file containing
-     * all the staff members
-     */
-    private void fetchStaffMembers() {
-        Multithreading.runAsync(() -> {
-            try {
-                StaffUtils.clearCache();
-            } catch (IOException e) {
-                e.printStackTrace();
-                LOGGER.warn("[Staff] Failed to fetch staff");
-            }
-        });
     }
 
     /**

@@ -77,9 +77,9 @@ open class Block {
 
     fun getLightValue(): Int = block.lightValue
 
-    fun getState(): IBlockState = World.getWorld()!!.getBlockState(blockPos)
+    private fun getState(): IBlockState = World.getWorld()!!.getBlockState(blockPos)
 
-    fun getDefaultState(): IBlockState = block.defaultState
+    private fun getDefaultState(): IBlockState = block.defaultState
 
     fun getX(): Int = blockPos.x
     fun getY(): Int = blockPos.y

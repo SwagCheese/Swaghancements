@@ -30,15 +30,18 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 public class SplashProgress {
+    private SplashProgress() {
+        throw new IllegalStateException("Utility class");
+    }
 
     // Max amount of progress updates
     private static final int DEFAULT_MAX = 11;
 
     // Current progress
-    private static int PROGRESS;
+    private static int progress;
 
     // Currently displayed progress text
-    private static String CURRENT = "";
+    private static String current = "";
 
     // Background texture
     private static ResourceLocation splash;
@@ -65,8 +68,8 @@ public class SplashProgress {
      * @param givenSplash   Text displayed on the splash
      */
     public static void setProgress(int givenProgress, String givenSplash) {
-        PROGRESS = givenProgress;
-        CURRENT = givenSplash;
+        progress = givenProgress;
+        current = givenSplash;
         update();
     }
 
@@ -103,7 +106,7 @@ public class SplashProgress {
         GlStateManager.enableTexture2D();
 
         // Initialize the splash texture
-        if (splash == null) splash = new ResourceLocation("textures/hyperium-splash.png");
+        if (splash == null) splash = new ResourceLocation("textures/hyperium-splash.png"); // TODO: edit this image to say "Swaghancements"
 
         // Bind the texture
         tm.bindTexture(splash);
@@ -146,17 +149,17 @@ public class SplashProgress {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
         // Calculate the progress bar
-        double nProgress = PROGRESS;
+        double nProgress = progress;
         double calc = (nProgress / DEFAULT_MAX) * sr.getScaledWidth();
 
         // Draw the transparent bar before the green bar
         Gui.drawRect(0, sr.getScaledHeight() - 35, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0, 0, 0, 50).getRGB());
 
         // Draw the current splash text
-        raleway.drawString(CURRENT, 20, sr.getScaledHeight() - 25, 0xffffffff);
+        raleway.drawString(current, 20, sr.getScaledHeight() - 25, 0xffffffff);
 
         // Draw the current amount of progress / max amount of progress
-        String s = PROGRESS + "/" + DEFAULT_MAX;
+        String s = progress + "/" + DEFAULT_MAX;
         roboto.drawString(s, sr.getScaledWidth() - 20 - roboto.getWidth(s), sr.getScaledHeight() - 25, 0xe1e1e1ff);
 
         // Render the blue progress bar

@@ -64,7 +64,7 @@ public class TypeFriendRequests extends ToggleBase {
             "",
             "It can be useful if you",
             "wish to keep friend",
-            "requests open, but don\'t",
+            "requests open, but don't",
             "want to see notifications"
         );
     }

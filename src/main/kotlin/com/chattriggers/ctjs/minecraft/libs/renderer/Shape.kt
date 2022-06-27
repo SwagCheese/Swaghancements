@@ -17,7 +17,7 @@ class Shape(private var color: Int) {
     private var drawMode = 9
 
     fun copy(): Shape = clone()
-    fun clone(): Shape {
+    private fun clone(): Shape {
         val clone = Shape(color)
         clone.vertexes.addAll(vertexes)
         clone.setDrawMode(drawMode)
@@ -41,7 +41,7 @@ class Shape(private var color: Int) {
      * 8 = quad strip<br>
      * 9 = polygon
      */
-    fun setDrawMode(drawMode: Int) = apply { this.drawMode = drawMode }
+    private fun setDrawMode(drawMode: Int) = apply { this.drawMode = drawMode }
 
     fun getVertexes(): List<Vector2f> = vertexes
     fun addVertex(x: Float, y: Float) = apply { this.vertexes.add(Vector2f(x, y)) }

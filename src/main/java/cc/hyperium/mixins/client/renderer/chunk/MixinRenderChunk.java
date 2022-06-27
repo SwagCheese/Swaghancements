@@ -32,9 +32,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderChunk.class)
 public class MixinRenderChunk {
 
-    private HyperiumRenderChunk hyperiumRenderChunk = new HyperiumRenderChunk((RenderChunk) (Object) this);
+    private final HyperiumRenderChunk hyperiumRenderChunk = new HyperiumRenderChunk((RenderChunk) (Object) this);
 
-    @Inject(method = "setPosition", at = @At("INVOKE"))
+    @SuppressWarnings("MixinAnnotationTarget")
+    @Inject(method = "setPosition", at = @At("INVOKE")) // not sure why this injection works
     private void setPosition(BlockPos bp, CallbackInfo ci) {
         hyperiumRenderChunk.setPosition(bp);
     }

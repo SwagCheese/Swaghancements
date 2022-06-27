@@ -79,7 +79,7 @@ class OnChatTrigger(method: Any, type: TriggerType, loader: ILoader) : OnTrigger
      * @param parameters the chat parameters to add
      * @return the trigger object for method chaining
      */
-    fun addParameters(vararg parameters: String) = apply {
+    private fun addParameters(vararg parameters: String) = apply {
         parameters.forEach { this.parameters.add(Parameter.getParameterByName(it)) }
     }
 

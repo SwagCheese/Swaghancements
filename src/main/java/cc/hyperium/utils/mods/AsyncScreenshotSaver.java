@@ -171,7 +171,7 @@ public class AsyncScreenshotSaver implements Runnable {
             // If the user doesn't want the screenshot to be uploaded, run this
             if (!upload) {
                 IChatComponent chatComponent = new ChatComponentText(
-                    ChatColor.RED + "[Hyperium] " + ChatColor.WHITE + "Captured to " + ChatColor.UNDERLINE + screenshot.getName());
+                    ChatColor.RED + "[Swaghancements] " + ChatColor.WHITE + "Captured to " + ChatColor.UNDERLINE + screenshot.getName());
                 chatComponent.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, screenshot.getCanonicalPath()));
                 Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent);
             } else {

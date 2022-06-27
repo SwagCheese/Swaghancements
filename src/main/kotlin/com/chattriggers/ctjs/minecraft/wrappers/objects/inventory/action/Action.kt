@@ -6,7 +6,7 @@ import com.chattriggers.ctjs.minecraft.wrappers.objects.inventory.Inventory
 import com.chattriggers.ctjs.utils.kotlin.External
 
 @External
-abstract class Action(var slot: Int, var windowId: Int) {
+abstract class Action(var slot: Int, private var windowId: Int) {
     fun setSlot(slot: Int) = apply {
         this.slot = slot
     }

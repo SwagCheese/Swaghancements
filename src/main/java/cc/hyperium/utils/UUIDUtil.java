@@ -43,4 +43,11 @@ public class UUIDUtil {
         if (thePlayer != null) return thePlayer.getUniqueID();
         return null;
     }
+
+    /**
+     * @return if the UUID matches my UUID
+     */
+    public static boolean isSwagcheese(UUID id) {
+        return id.equals(UUID.fromString("954198ad-3fb0-48fc-a382-0772509ba92a"));
+    }
 }

@@ -74,7 +74,7 @@ public class TypeAds extends ToggleBase {
             "",
             "This cleans up the chat",
             "whilst you are afk",
-            "so you don\'t miss",
+            "so you don't miss",
             "important messages");
     }
 }

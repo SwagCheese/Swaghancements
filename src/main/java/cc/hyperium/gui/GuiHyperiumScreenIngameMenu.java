@@ -20,30 +20,19 @@ package cc.hyperium.gui;
 import cc.hyperium.Hyperium;
 import cc.hyperium.config.Settings;
 import cc.hyperium.gui.hyperium.HyperiumMainGui;
-import cc.hyperium.mods.sk1ercommon.Multithreading;
-import cc.hyperium.mods.sk1ercommon.ResolutionUtil;
 import cc.hyperium.purchases.PurchaseApi;
-import cc.hyperium.utils.ChatColor;
 import cc.hyperium.utils.JsonHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.server.MinecraftServer;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 public class GuiHyperiumScreenIngameMenu extends GuiScreen {
-
-    private static JsonHolder data = new JsonHolder();
-    private final DecimalFormat formatter = new DecimalFormat("#,###");
-    private long lastUpdate;
-    private int cooldown;
-    private int baseAngle;
 
     @Override
     public void initGui() {
@@ -61,8 +50,8 @@ public class GuiHyperiumScreenIngameMenu extends GuiScreen {
         buttonList.add(new GuiButton(4, width / 2 - 100, height / 4 + 24 + i, I18n.format("menu.returnToGame")));
         buttonList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + i, 98, 20, I18n.format("menu.options")));
 
-        GuiButton guibutton;
-        buttonList.add(guibutton = new GuiButton(7, width / 2 + 2, height / 4 + 96 + i, 98, 20, I18n.format("menu.shareToLan")));
+        GuiButton guibutton = new GuiButton(7, width / 2 + 2, height / 4 + 96 + i, 98, 20, I18n.format("menu.shareToLan"));
+        buttonList.add(guibutton);
         buttonList.add(new GuiButton(5, width / 2 - 100, height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements")));
         buttonList.add(new GuiButton(6, width / 2 + 2, height / 4 + 48 + i, 98, 20, I18n.format("gui.stats")));
 
@@ -154,81 +143,5 @@ public class GuiHyperiumScreenIngameMenu extends GuiScreen {
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);
-        GlStateManager.translate(0, height - 50, 0);
-
-        if (System.currentTimeMillis() - lastUpdate > 2000L) refreshData();
-
-        baseAngle %= 360;
-
-        ScaledResolution current = ResolutionUtil.current();
-        GlStateManager.translate(current.getScaledWidth() >> 1, 5, 0);
-
-        drawCenteredString(fontRendererObj, I18n.format("gui.ingamemenu.playercount"), 0, -5, 0xFFFFFF);
-        GlStateManager.translate(0F, 10F, 0F);
-        GlStateManager.scale(1, 1, 1);
-        GlStateManager.rotate(baseAngle, 1.0F, 0.0F, 0.0F);
-
-        float z = 4F;
-        float e = 80;
-        float i = 0;
-
-        GlStateManager.translate(0.0F, 0.0F, z);
-
-        if (baseAngle < e) i = (e - Math.abs(baseAngle)) / e;
-        else if (baseAngle > 360 - e) i = (e - (Math.abs((360) - baseAngle))) / e;
-
-        if (i > 0) {
-            drawCenteredString(fontRendererObj, I18n.format("gui.ingamemenu.playercount.now",
-                ChatColor.GREEN + formatter.format(data.optInt("online")) + ChatColor.RESET), 0, 0, 0xFFFFFF);
-        }
-
-        GlStateManager.translate(0.0F, 0.0F, -z);
-        GlStateManager.rotate(90, 1.0F, 0.0F, 0.0F);
-        GlStateManager.translate(0.0F, 0.0F, z);
-        i = (e - Math.abs(270 - baseAngle)) / e;
-
-        if (i > 0) {
-            drawCenteredString(fontRendererObj, I18n.format("gui.ingamemenu.playercount.lastday",
-                ChatColor.GREEN + formatter.format(data.optInt("day")) + ChatColor.RESET), 0, 0, 0xFFFFFF);
-        }
-
-        GlStateManager.translate(0.0F, 0.0F, -z);
-        GlStateManager.rotate(90, 1.0F, 0.0F, 0.0F);
-        GlStateManager.translate(0.0F, 0.0F, z);
-        i = (e - Math.abs(180 - baseAngle)) / e;
-
-        if (i > 0) {
-            drawCenteredString(fontRendererObj, I18n.format("gui.ingamemenu.playercount.lastweek",
-                ChatColor.GREEN + formatter.format(data.optInt("week")) + ChatColor.RESET), 0, 0, 0xFFFFFF);
-        }
-
-        GlStateManager.translate(0.0F, 0.0F, -z);
-        GlStateManager.rotate(90, 1.0F, 0.0F, 0.0F);
-        GlStateManager.translate(0.0F, 0.0F, z);
-        i = (e - Math.abs(90 - baseAngle)) / e;
-
-        if (i > 0) {
-            drawCenteredString(fontRendererObj, I18n.format("gui.ingamemenu.playercount.alltime",
-                ChatColor.GREEN + formatter.format(data.optInt("all")) + ChatColor.RESET), 0, 0, 0xFFFFFF);
-        }
-    }
-
-    private synchronized void refreshData() {
-        lastUpdate = System.currentTimeMillis() * 2;
-        Multithreading.runAsync(() -> {
-            data = PurchaseApi.getInstance().get("https://api.hyperium.cc/users");
-            lastUpdate = System.currentTimeMillis();
-        });
-
-    }
-
-    @Override
-    public void updateScreen() {
-        super.updateScreen();
-        cooldown++;
-        if (cooldown > 40) {
-            baseAngle += 9;
-            if (cooldown >= 50) cooldown = 0;
-        }
     }
 }

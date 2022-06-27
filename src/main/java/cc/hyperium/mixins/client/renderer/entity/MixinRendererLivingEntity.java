@@ -47,7 +47,7 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
 
     @Shadow protected List<LayerRenderer<T>> layerRenderers;
 
-    private HyperiumRendererLivingEntity<T> hyperiumRenderLivingEntity = new HyperiumRendererLivingEntity<T>((RendererLivingEntity<T>) (Object) this);
+    private final HyperiumRendererLivingEntity<T> hyperiumRenderLivingEntity = new HyperiumRendererLivingEntity<>((RendererLivingEntity<T>) (Object) this);
 
     protected MixinRendererLivingEntity(RenderManager renderManager) {
         super(renderManager);
@@ -115,11 +115,12 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
      * @reason we do it better
      */
     @Overwrite
+    @Override
     public void renderName(T entity, double x, double y, double z) {
         hyperiumRenderLivingEntity.renderName(entity, x, y, z, renderManager);
     }
 
-    @Inject(method = "doRender", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"), cancellable = true)
     private void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if (Settings.DISABLE_ARMORSTANDS && entity instanceof EntityArmorStand) ci.cancel();
 

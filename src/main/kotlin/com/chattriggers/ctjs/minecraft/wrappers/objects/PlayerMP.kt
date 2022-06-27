@@ -19,7 +19,7 @@ class PlayerMP(val player: EntityPlayer) : Entity(player) {
         }
     }
 
-    fun getPing(): Int = getPlayerInfo().responseTime
+    private fun getPing(): Int = getPlayerInfo().responseTime
 
     /**
      * Gets the item currently in the player's specified inventory slot.

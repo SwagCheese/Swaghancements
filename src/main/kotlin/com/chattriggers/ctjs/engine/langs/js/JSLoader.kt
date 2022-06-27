@@ -92,7 +92,7 @@ object JSLoader : ILoader {
     }
 
     override fun exec(type: TriggerType, vararg args: Any?) {
-        triggers.removeAll(toRemove)
+        triggers.removeAll(toRemove.toSet())
         toRemove.clear()
 
         try {

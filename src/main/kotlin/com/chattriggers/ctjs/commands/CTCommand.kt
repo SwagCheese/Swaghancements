@@ -52,7 +52,7 @@ object CTCommand : BaseCommand {
             "config", "settings", "setting" ->
                 GuiHandler.openGui(GuiConfig())
             "sim", "simulate" ->
-                ChatLib.simulateChat(Arrays.copyOfRange(args, 1, args.size).joinToString(" "))
+                ChatLib.simulateChat(args.copyOfRange(1, args.size).joinToString(" "))
             "dump" -> dumpChat(args)
             "copy" -> copyArgsToClipboard(args)
             else -> ChatLib.chat(usage)
@@ -113,7 +113,7 @@ object CTCommand : BaseCommand {
 
     private fun copyArgsToClipboard(args: Array<String>) {
         clearOldDump()
-        val toCopy = Arrays.copyOfRange(args, 1, args.size).joinToString(" ")
+        val toCopy = args.copyOfRange(1, args.size).joinToString(" ")
         Toolkit.getDefaultToolkit().systemClipboard.setContents(StringSelection(toCopy), null)
     }
 }

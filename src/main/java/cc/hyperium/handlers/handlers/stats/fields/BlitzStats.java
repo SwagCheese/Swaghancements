@@ -66,7 +66,7 @@ public class BlitzStats extends AbstractHypixelStats {
         lines.add(new String[]{"Kit", "Level"});
         JsonHolder blitz = player.getStats(GameType.SURVIVAL_GAMES);
         for (String st : WebsiteUtils.blitz_kits) {
-            String tmp1 = null;
+            String tmp1;
             if (!st.contains("Hype")) {
                 tmp1 = st.replace(" ", "").toLowerCase();
             } else {

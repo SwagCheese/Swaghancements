@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class WebsiteUtils {
 
     public static final List<String> blitz_kits = new ArrayList<>();
-    public static final TreeMap<Integer, String> numerals = new TreeMap<>();
+    protected static final TreeMap<Integer, String> numerals = new TreeMap<>();
 
     static {
         numerals.put(100, "C");
@@ -121,6 +121,8 @@ public class WebsiteUtils {
             case "black":
                 color = "§0";
                 break;
+            default:
+                Hyperium.LOGGER.warn("Unknown color: {}", in);
         }
         return color;
     }

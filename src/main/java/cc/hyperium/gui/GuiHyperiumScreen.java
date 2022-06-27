@@ -30,10 +30,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
 
 public class GuiHyperiumScreen extends GuiScreen {
     private static ResourceLocation dynamicBackgroundTexture;
-    private static File customImage = new File(Minecraft.getMinecraft().mcDataDir, "customImage.png");
+    private static final File customImage = new File(Minecraft.getMinecraft().mcDataDir, "customImage.png");
     GuiButton serverButton;
 
     public static void renderBackgroundImage() {
@@ -68,7 +69,7 @@ public class GuiHyperiumScreen extends GuiScreen {
         if (customImage.exists()) {
             BufferedImage bufferedImage;
             try {
-                bufferedImage = ImageIO.read(new FileInputStream(customImage));
+                bufferedImage = ImageIO.read(Files.newInputStream(customImage.toPath()));
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;

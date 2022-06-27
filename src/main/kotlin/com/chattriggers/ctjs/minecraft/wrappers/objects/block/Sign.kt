@@ -16,7 +16,7 @@ import net.minecraft.tileentity.TileEntitySign
 class Sign(block: Block) : Block(block) {
     private val sign: TileEntitySign = World.getWorld()!!.getTileEntity(blockPos) as TileEntitySign
 
-    fun getLines(): List<Message> = sign.signText.map { Message(it) }
+    private fun getLines(): List<Message> = sign.signText.map { Message(it) }
 
     fun getFormattedLines(): List<String> = sign.signText.map { it.formattedText }
 

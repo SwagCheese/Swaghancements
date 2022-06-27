@@ -81,7 +81,7 @@ object AddonBootstrap {
      * Translators which can change, add or parse an addons manifest
      * at a certain phase
      */
-    internal val translators = arrayListOf(
+    private val translators = arrayListOf(
         InstanceTranslator(),
         MixinTranslator(),
         TransformerTranslator()

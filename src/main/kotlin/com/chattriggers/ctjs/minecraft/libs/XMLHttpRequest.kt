@@ -25,8 +25,8 @@ abstract class XMLHttpRequest {
     private lateinit var methodCallback: OnTrigger
 
     var status: Int? = null
-    var statusText: String? = null
-    var responseText: String? = null
+    private var statusText: String? = null
+    private var responseText: String? = null
     var extras = HashMap<String, Any>()
 
     fun open(method: String, urlStr: String, async: Boolean) {

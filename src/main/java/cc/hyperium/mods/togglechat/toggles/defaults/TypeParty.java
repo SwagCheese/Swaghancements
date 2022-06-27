@@ -59,7 +59,7 @@ public class TypeParty extends ToggleBase {
             "&9Party > &7Player&r: Hello",
             "",
             "Fairly useful when",
-            "You\'re in a large party"
+            "You're in a large party"
         );
     }
 }

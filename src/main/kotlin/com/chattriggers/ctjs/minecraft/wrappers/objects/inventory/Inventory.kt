@@ -11,7 +11,7 @@ import net.minecraft.inventory.IInventory
 @External
 class Inventory {
     val inventory: IInventory?
-    val container: Container?
+    private val container: Container?
 
     constructor(inventory: IInventory) {
         this.inventory = inventory
@@ -30,7 +30,7 @@ class Inventory {
      *
      * @return the size of the Inventory
      */
-    fun getSize(): Int = inventory?.sizeInventory ?: container!!.inventoryItemStacks.size
+    private fun getSize(): Int = inventory?.sizeInventory ?: container!!.inventoryItemStacks.size
 
     /**
      * Gets the item in any slot, starting from 0.
@@ -157,7 +157,7 @@ class Inventory {
      */
     fun getName(): String = inventory?.name ?: "container"
 
-    fun getClassName(): String = inventory?.javaClass?.simpleName ?: container!!.javaClass.simpleName
+    private fun getClassName(): String = inventory?.javaClass?.simpleName ?: container!!.javaClass.simpleName
 
     override fun toString(): String = "Inventory{${getClassName()}}"
 }

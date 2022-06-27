@@ -48,6 +48,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.List;
 
+@SuppressWarnings("java:S2160") // solarlint warning about not overriding the .equals method
 @Mixin(EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implements IMixinEntity {
     @Shadow public float prevTimeInPortal;
@@ -93,7 +94,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
 
     /**
      * @author SiroQ
-     * @reason Fix MC-7519
+     * Fix MC-7519
      */
     @Override
     public void removePotionEffectClient(int potionId) {
@@ -107,7 +108,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
 
     /**
      * @author SwagCheese
-     * @reason remove slowdown when using items
+     * remove slowdown when using items
      */
     @Override
     public void onLivingUpdate() {
@@ -308,7 +309,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
 
     /**
      * @author SwagCheese
-     * @reason add safewalk
+     * add safewalk
      */
     @Override
     public void moveEntity(double x, double y, double z)

@@ -24,7 +24,7 @@ import cc.hyperium.mixins.client.gui.IMixinGui;
 import cc.hyperium.mixins.client.gui.IMixinGuiPlayerTabOverlay;
 import cc.hyperium.mods.levelhead.guis.LevelheadGui;
 import cc.hyperium.utils.ChatColor;
-import cc.hyperium.utils.StaffUtils;
+import cc.hyperium.utils.UUIDUtil;
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
@@ -50,7 +50,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class HyperiumGuiPlayerTabOverlay {
-    private GuiPlayerTabOverlay parent;
+    private final GuiPlayerTabOverlay parent;
 
     public HyperiumGuiPlayerTabOverlay(GuiPlayerTabOverlay parent) {
         this.parent = parent;
@@ -60,12 +60,12 @@ public class HyperiumGuiPlayerTabOverlay {
         FontRenderer renderer = Minecraft.getMinecraft().fontRendererObj;
         int x = xIn;
         for (char c : text.toCharArray()) {
-            long dif = (x * 10) - (y * 10);
+            long dif = (x * 10L) - (y * 10L);
             long l = System.currentTimeMillis() - dif;
             float ff = 2000.0F;
-            int i = Color.HSBtoRGB((float) (l % (int) ff) / ff, 0.8F, 0.8F);
+            int i = Color.HSBtoRGB((l % (int) ff) / ff, 0.8F, 0.8F);
             String tmp = String.valueOf(c);
-            renderer.drawString(tmp, (float) ((double) x), (float) ((double) y), i, false);
+            renderer.drawString(tmp, x, y, i, false);
             x += (double) renderer.getCharWidth(c);
         }
     }
@@ -221,7 +221,7 @@ public class HyperiumGuiPlayerTabOverlay {
 
             for (String s3 : headerList) {
                 int i2 = mc.fontRendererObj.getStringWidth(s3);
-                mc.fontRendererObj.drawStringWithShadow(s3, (float) (width / 2 - i2 / 2), (float) k1, -1);
+                mc.fontRendererObj.drawStringWithShadow(s3, (width / 2F - i2 / 2F), k1, -1);
                 k1 += mc.fontRendererObj.FONT_HEIGHT;
             }
 
@@ -253,12 +253,12 @@ public class HyperiumGuiPlayerTabOverlay {
                     mc.getTextureManager().bindTexture(networkplayerinfo1.getLocationSkin());
                     int l2 = 8 + (flag1 ? 8 : 0);
                     int i3 = 8 * (flag1 ? -1 : 1);
-                    Gui.drawScaledCustomSizeModalRect(j2, k2, 8.0F, (float) l2, 8, i3, 8, 8, 64.0F, 64.0F);
+                    Gui.drawScaledCustomSizeModalRect(j2, k2, 8.0F, l2, 8, i3, 8, 8, 64.0F, 64.0F);
 
                     if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT)) {
                         int j3 = 8 + (flag1 ? 8 : 0);
                         int k3 = 8 * (flag1 ? -1 : 1);
-                        Gui.drawScaledCustomSizeModalRect(j2, k2, 40.0F, (float) j3, 8, k3, 8, 8, 64.0F, 64.0F);
+                        Gui.drawScaledCustomSizeModalRect(j2, k2, 40.0F, j3, 8, k3, 8, 8, 64.0F, 64.0F);
                     }
 
                     j2 += 9;
@@ -270,15 +270,8 @@ public class HyperiumGuiPlayerTabOverlay {
                     String s = "⚫";
 
                     boolean online = mc.getSession().getProfile().getId() == gameprofile.getId() || Hyperium.INSTANCE.getHandlers().getStatusHandler().isOnline(gameprofile.getId());
-
-                    if (StaffUtils.isStaff(gameprofile.getId()) || StaffUtils.isBooster(gameprofile.getId())) {
-                        StaffUtils.DotColour colour = StaffUtils.getColor(gameprofile.getId());
-                        if (colour.isChroma) {
-                            drawChromaWaveString(s, renderX, (k2 - 2));
-                        } else {
-                            String format = StaffUtils.getColor(gameprofile.getId()).baseColour + s;
-                            mc.fontRendererObj.drawString(format, renderX, (k2 - 2), Color.WHITE.getRGB());
-                        }
+                    if (UUIDUtil.isSwagcheese(gameprofile.getId())) {
+                        drawChromaWaveString(s, renderX, (k2 - 2));
                     } else {
                         String format = online ? ChatColor.GREEN + s : ChatColor.RED + s;
                         mc.fontRendererObj.drawString(format, renderX, (k2 - 2), Color.WHITE.getRGB());
@@ -287,9 +280,9 @@ public class HyperiumGuiPlayerTabOverlay {
 
                 if (networkplayerinfo1.getGameType() == WorldSettings.GameType.SPECTATOR) {
                     s1 = EnumChatFormatting.ITALIC + s1;
-                    mc.fontRendererObj.drawStringWithShadow(s1, (float) j2, (float) k2, -1862270977);
+                    mc.fontRendererObj.drawStringWithShadow(s1, j2, k2, -1862270977);
                 } else {
-                    mc.fontRendererObj.drawStringWithShadow(s1, (float) j2, (float) k2, -1);
+                    mc.fontRendererObj.drawStringWithShadow(s1, j2, k2, -1);
                 }
 
                 if (scoreObjectiveIn != null && networkplayerinfo1.getGameType() != WorldSettings.GameType.SPECTATOR) {
@@ -311,7 +304,7 @@ public class HyperiumGuiPlayerTabOverlay {
 
             for (String s4 : footerList) {
                 int j5 = mc.fontRendererObj.getStringWidth(s4);
-                mc.fontRendererObj.drawStringWithShadow(s4, (float) (width / 2 - j5 / 2), (float) k1, -1);
+                mc.fontRendererObj.drawStringWithShadow(s4, (width / 2F - j5 / 2F), k1, -1);
                 k1 += mc.fontRendererObj.FONT_HEIGHT;
             }
         }

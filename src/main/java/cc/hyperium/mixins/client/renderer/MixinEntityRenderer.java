@@ -72,7 +72,7 @@ public abstract class MixinEntityRenderer {
         mc.mcProfiler.endSection();
     }
 
-    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=outline"), cancellable = true)
+    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=outline"))
     private void drawOutline(int pass, float part, long nano, CallbackInfo info) {
         hyperiumEntityRenderer.drawOutline(part, mc);
     }

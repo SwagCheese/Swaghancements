@@ -118,6 +118,7 @@ public class MixinModelBiped extends ModelBase implements IMixinModelBiped {
      * @author 9Y0, Mojang
      * @reason body parts
      */
+    @Override
     @Overwrite
     public void render(Entity entityIn, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float scale) {
         setRotationAngles(p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, scale, entityIn);
@@ -158,6 +159,7 @@ public class MixinModelBiped extends ModelBase implements IMixinModelBiped {
      * @author Amplifiable
      * @reason 1.7 Blocking & Item Held
      */
+    @Override
     @Overwrite
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         bipedHead.rotateAngleY = netHeadYaw / 57.295776f;

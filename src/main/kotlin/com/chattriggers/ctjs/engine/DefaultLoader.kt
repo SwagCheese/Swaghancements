@@ -45,7 +45,7 @@ object DefaultLoader {
                 }
 
                 val moduleFolder = getFoldersInDir(modulesFolder).firstOrNull {
-                    it.name.toLowerCase() == name.toLowerCase()
+                    it.name.equals(name, ignoreCase = true)
                 }!!
 
                 val modules = getModule(moduleFolder, false)
@@ -69,7 +69,7 @@ object DefaultLoader {
             }
 
             val moduleFolder = getFoldersInDir(modulesFolder).firstOrNull {
-                it.name.toLowerCase() == name.toLowerCase()
+                it.name.equals(name, ignoreCase = true)
             }!!
 
             return getModule(moduleFolder, false)

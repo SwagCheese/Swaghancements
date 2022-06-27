@@ -29,12 +29,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FontRenderer.class)
 public abstract class MixinFontRenderer {
 
-    @ModifyVariable(method = "renderString", at = @At(value = "HEAD"))
+    @ModifyVariable(method = "renderString", at = @At(value = "HEAD"), argsOnly = true)
     private String mod(String in) {
         return NickHider.instance == null ? in : NickHider.instance.apply(in);
     }
 
-    @ModifyVariable(method = "getStringWidth", at = @At(value = "HEAD"))
+    @ModifyVariable(method = "getStringWidth", at = @At(value = "HEAD"), argsOnly = true)
     private String modWidth(String in) {
         return NickHider.instance == null ? in : NickHider.instance.apply(in);
     }
